@@ -20,6 +20,7 @@
 
 # plugin release files
 /*.zip
+/*.zip.sha1
 /plugin.xml
 
 # older plugin install locations
@@ -28,3 +29,6 @@
 
 # "temporary" build files
 /target
+
+# not used for this plugin
+/web-app
