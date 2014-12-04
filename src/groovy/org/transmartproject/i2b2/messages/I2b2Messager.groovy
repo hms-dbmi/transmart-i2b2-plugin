@@ -53,6 +53,7 @@ class I2b2Messager {
 
     @PreDestroy
     private void closeHttpClient() {
+        log.info "Destroying http client"
         httpClient.close()
     }
 

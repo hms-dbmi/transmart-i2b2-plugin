@@ -1,11 +1,13 @@
 package org.transmartproject.i2b2.ontology
 
+import groovy.transform.ToString
 import org.transmartproject.core.ontology.BoundModifier
 import org.transmartproject.core.ontology.OntologyTerm
 
+@ToString(includes = ['key', 'appliedPath', 'qualifiedTerm'])
 class I2b2Modifier extends AbstractI2b2OntologyTerm implements BoundModifier {
 
-    I2b2RegularOntologyTerm qualifiedTerm
+    OntologyTerm qualifiedTerm
 
     @Override
     List<OntologyTerm> getChildren(boolean showHidden = false, boolean showSynonyms = false) {

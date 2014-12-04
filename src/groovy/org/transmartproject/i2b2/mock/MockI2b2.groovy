@@ -30,6 +30,8 @@ class MockI2b2 {
 
     private AssertionError lastError
 
+    private MockI2b2Handler mockI2b2Handler = new MockI2b2Handler()
+
     @PostConstruct
     void init() {
         executorService = Executors.newCachedThreadPool()
@@ -38,7 +40,7 @@ class MockI2b2 {
         server = HttpServer.create(addr, 0)
 
         server.with {
-            createContext('/', new MockI2b2Handler())
+            createContext('/', mockI2b2Handler)
             executor = executorService
             start()
         }
@@ -57,6 +59,10 @@ class MockI2b2 {
         }
     }
 
+    Object getLock() {
+        mockI2b2Handler
+    }
+
     @PreDestroy
     void destroy() {
         server.stop(3 /* seconds */)
@@ -66,11 +72,13 @@ class MockI2b2 {
     class MockI2b2Handler implements HttpHandler {
 
         @Override
+        synchronized /* gmock doesn't like it otherwise */
         void handle(HttpExchange exchange) throws IOException {
             String body = exchange.requestBody.getText('UTF-8')
 
             try {
-                String response = callsMock.withRequest(body)
+                String response = callsMock.withRequest(
+                        exchange.requestURI.toASCIIString(), body)
                 exchange.responseHeaders.add(
                         'Content-type', 'application/xml; charset=UTF-8')
                 def responseBytes = response.getBytes('UTF-8')
@@ -83,7 +91,9 @@ class MockI2b2 {
                  * save it so it can be rethrown in the main thread */
                 lastError = e
                 exchange.sendResponseHeaders(500, 0)
-                exchange.responseBody.close()
+                exchange.responseBody.withWriter {
+                    it << 'Got error: ' << e.message
+                }
             }
         }
     }
