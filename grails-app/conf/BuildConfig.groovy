@@ -34,6 +34,20 @@ grails.project.dependency.resolution = {
 
     dependencies {
         compile 'org.transmartproject:transmart-core-api:1.2.2-hackathon-SNAPSHOT'
+        compile 'org.apache.httpcomponents:httpclient:4.3.6'
+        compile 'org.apache.httpcomponents:httpasyncclient:4.0.2'
+        compile 'com.google.guava:guava:18.0'
+
+        test 'org.hamcrest:hamcrest-library:1.3',
+                'org.hamcrest:hamcrest-core:1.3'
+        test 'junit:junit:4.11', {
+            transitive = false /* don't bring hamcrest */
+            export     = false
+        }
+        test 'org.gmock:gmock:0.9.0-r435-hyve2', {
+            transitive = false /* don't bring groovy-all */
+            export     = false
+        }
     }
 
     plugins {

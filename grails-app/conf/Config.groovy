@@ -1,13 +1,6 @@
 // configuration for plugin testing - will not be included in the plugin zip
 
 log4j = {
-    // Example of changing the log pattern for the default console
-    // appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
-
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
            'org.codehaus.groovy.grails.web.pages', //  GSP
            'org.codehaus.groovy.grails.web.sitemesh', //  layouts
@@ -19,4 +12,16 @@ log4j = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+
+
+    debug 'org.transmartproject.i2b2'
+    //debug 'org.apache.http'
+    //error 'org.apache.http.wire'
+}
+
+environments {
+    test {
+        org.transmartproject.i2b2.instance.project_path =
+                '/testProject/subTestProject/'
+    }
 }

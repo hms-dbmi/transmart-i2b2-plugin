@@ -1,3 +1,6 @@
+import org.springframework.stereotype.Component
+import org.transmartproject.i2b2.ontology.I2b2ConceptsResource
+
 class TransmartI2b2GrailsPlugin {
     def version = "1.0-SNAPSHOT"
     def grailsVersion = "2.3 > *"
@@ -22,4 +25,42 @@ the i2b2 XML APIs.\
     def issueManagement = [ system: "JIRA", url: "http://jira.transmartfoundation.org" ]
 
     def scm = [ url: "https://github.com/transmart/transmart-i2b2" ]
+
+    def doWithSpring = {
+        xmlns context:"http://www.springframework.org/schema/context"
+
+        context.'component-scan'('base-package': 'org.transmartproject.i2b2') {
+            context.'include-filter'(
+                    type:       'annotation',
+                    expression: Component.canonicalName)
+        }
+
+        /* override bean */
+        conceptsResourceService(I2b2ConceptsResource)
+
+        def instanceConfig = application.config.org.transmartproject.i2b2.instance
+
+        def handleDefault = { setting, defValue ->
+            if (instanceConfig."$setting") {
+                return
+            }
+            instanceConfig."$setting" = defValue
+            log.info "Setting i2b2 instance $setting " +
+                    "to default '${instanceConfig."$setting"}'"
+        }
+
+        handleDefault 'host',         'localhost'
+        handleDefault 'port',         9090
+        handleDefault 'context',      'i2b2'
+
+        handleDefault 'user',         'i2b2'
+        handleDefault 'password',     'demouser'
+        handleDefault 'domain',       'i2b2demo'
+        handleDefault 'project_path', '/'
+        handleDefault 'project',      'Demo'
+
+        /* I'm not very happy with having a separate project
+         * setting; this could be inferred from the getServices
+         * responses together with project_path */
+    }
 }
