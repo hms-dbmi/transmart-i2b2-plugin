@@ -16,11 +16,16 @@ class I2b2MessageFactory {
                     bindings: ImmutableMap.of(
                             'i2b2', 'http://www.i2b2.org/xsd/hive/msg/1.1/',
                             'pm', 'http://www.i2b2.org/xsd/cell/pm/1.1/',
-                            'ont', 'http://www.i2b2.org/xsd/cell/ont/1.1/'
+                            'ont', 'http://www.i2b2.org/xsd/cell/ont/1.1/',
+                            'psm', 'http://www.i2b2.org/xsd/cell/crc/psm/1.1/',
+                            'xsi', 'http://www.w3.org/2001/XMLSchema-instance'
                     ))
+    private static final long DEFAULT_WAIT_TIME_MILLISECONDS = 600 * 1000
 
     @Autowired
     GrailsApplication grailsApplication
+
+    Long waitTimeMilliseconds
 
     private getInstanceConfig() {
         grailsApplication.config.org.transmartproject.i2b2.instance
@@ -40,6 +45,15 @@ class I2b2MessageFactory {
 
     private String getProject() {
         instanceConfig.project
+    }
+
+    private Long getWaitTimeMilliseconds() {
+        if (this.@waitTimeMilliseconds) {
+            return this.@waitTimeMilliseconds
+        }
+
+        grailsApplication.config.org.transmartproject.i2b2.waitTimeMilliseconds ?:
+                DEFAULT_WAIT_TIME_MILLISECONDS
     }
 
     I2b2Message create(Closure<Void> configureBody) {
@@ -62,6 +76,9 @@ class I2b2MessageFactory {
                     password password
                 }
                 project_id project
+            }
+            request_header {
+                result_waittime_ms waitTimeMilliseconds.toString()
             }
             message_body() {
                 configureBody.setDelegate delegate

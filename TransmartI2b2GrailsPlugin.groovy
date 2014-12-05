@@ -1,5 +1,7 @@
+import org.codehaus.groovy.grails.commons.spring.BeanConfiguration
 import org.springframework.stereotype.Component
 import org.transmartproject.i2b2.ontology.I2b2ConceptsResource
+import org.transmartproject.i2b2.querytool.I2b2QueriesResource
 
 class TransmartI2b2GrailsPlugin {
     def version = "1.0-SNAPSHOT"
@@ -37,6 +39,12 @@ the i2b2 XML APIs.\
 
         /* override bean */
         conceptsResourceService(I2b2ConceptsResource)
+
+        /* override bean */
+        queriesResourceService(I2b2QueriesResource) { BeanConfiguration bc ->
+            bc.beanDefinition.primary = true
+        }
+        coreDbQueriesResourceService('org.transmartproject.db.querytool.QueriesResourceService')
 
         def instanceConfig = application.config.org.transmartproject.i2b2.instance
 

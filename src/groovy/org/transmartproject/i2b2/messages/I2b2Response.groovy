@@ -1,17 +1,26 @@
 package org.transmartproject.i2b2.messages
 
+import groovy.util.logging.Log4j
 import groovy.util.slurpersupport.NodeChildren
 import org.apache.http.HttpEntity
 import org.apache.http.entity.ContentType
 import org.transmartproject.core.exceptions.UnexpectedResultException
 
+@Log4j
 class I2b2Response {
     private slurperResult
 
     I2b2Response(HttpEntity entity) {
         def contentType = ContentType.getOrDefault(entity)
+
         entity.content.withStream {
             def reader = new InputStreamReader(it, contentType.charset)
+
+            if (log.isDebugEnabled()) {
+                def content = reader.text
+                log.debug("Building i2b2 response with content:\n$content")
+                reader = new StringReader(content)
+            }
 
             slurperResult = new XmlSlurper(false, true, false)
                     .parse(reader)
