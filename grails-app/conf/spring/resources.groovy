@@ -30,4 +30,5 @@ beans = {
                 ),
         )
     }
+    queryDefinitionXmlService('org.transmartproject.db.querytool.QueryDefinitionXmlService')
 }

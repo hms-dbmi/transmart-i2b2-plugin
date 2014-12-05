@@ -63,3 +63,6 @@ grails.project.dependency.resolution = {
     }
 }
 
+dm?.with {
+    configureInternalPlugin 'runtime', 'transmart-core'
+}
