@@ -6,7 +6,7 @@ import com.google.common.util.concurrent.ListenableFuture
 import groovy.util.logging.Log4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.transmartproject.core.exceptions.NoSuchResourceException
-import org.transmartproject.core.ontology.BoundModifier
+import org.transmartproject.i2b2.ontology.I2b2Modifier
 import org.transmartproject.core.ontology.ConceptsResource
 import org.transmartproject.core.ontology.OntologyTerm
 import org.transmartproject.i2b2.messages.*
@@ -27,7 +27,6 @@ class I2b2ConceptsResource implements ConceptsResource {
 
     @Override
     List<OntologyTerm> getAllCategories() {
-
         def message = messageFactory.create {
             'ont:get_categories'([
                     hiddens: 'true',
@@ -50,10 +49,10 @@ class I2b2ConceptsResource implements ConceptsResource {
             I2b2MessageEnvelope message) {
         ListenableFuture<I2b2Response> response =
                 messager.sendMessage(message)
-
+		
         Futures.transform(response, { I2b2Response resp ->
             resp.throwIfNotDone()
-
+			
             resp.body."$entityName".children().collect {
                 ontologyTermFactory.fromResponseNode(qualified, it)
             }
@@ -88,8 +87,9 @@ class I2b2ConceptsResource implements ConceptsResource {
         results[0]
     }
 
+	
     /* TODO: needs to be added to the interface */
-    BoundModifier getModifier(String modifierKey,
+    I2b2Modifier getModifier(String modifierKey,
                               String appliedPath,
                               String qualifiedTermKey) throws NoSuchResourceException {
         def message1 = messageFactory.create {
@@ -130,6 +130,7 @@ class I2b2ConceptsResource implements ConceptsResource {
             it
         }
     }
+    
 
     Future<List<OntologyTerm>> fetchConceptChildren(I2b2RegularOntologyTerm ot,
                                                     boolean showHidden,
@@ -150,7 +151,7 @@ class I2b2ConceptsResource implements ConceptsResource {
                 cell: I2b2CellType.ONTOLOGY_MANAGEMENT)
     }
 
-    Future<List<BoundModifier>> fetchConceptModifiers(I2b2RegularOntologyTerm ot,
+    Future<List<I2b2Modifier>> fetchConceptModifiers(I2b2RegularOntologyTerm ot,
                                                       boolean showHidden,
                                                       boolean showSynonyms) {
         def message = messageFactory.create {
@@ -168,7 +169,7 @@ class I2b2ConceptsResource implements ConceptsResource {
                 cell: I2b2CellType.ONTOLOGY_MANAGEMENT)
     }
 
-    Future<List<BoundModifier>> fetchModifierChildren(I2b2Modifier modifier,
+    Future<List<I2b2Modifier>> fetchModifierChildren(I2b2Modifier modifier,
                                                       boolean showHidden,
                                                       boolean showSynonyms) {
         def message = messageFactory.create {
@@ -188,4 +189,6 @@ class I2b2ConceptsResource implements ConceptsResource {
                         service: 'getModifierChildren',
                         cell: I2b2CellType.ONTOLOGY_MANAGEMENT)
     }
+    
+    
 }
