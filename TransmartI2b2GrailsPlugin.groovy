@@ -61,7 +61,7 @@ the i2b2 XML APIs.\
         handleDefault 'port',         9090
         handleDefault 'context',      'i2b2'
 
-        handleDefault 'user',         'i2b2'
+        handleDefault 'user',         'Demo'
         handleDefault 'password',     'demouser'
         handleDefault 'domain',       'i2b2demo'
         handleDefault 'project_path', '/'
