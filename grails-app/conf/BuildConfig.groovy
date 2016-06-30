@@ -33,7 +33,7 @@ grails.project.dependency.resolution = {
     }
 
     dependencies {
-        compile 'org.transmartproject:transmart-core-api:1.2.2-hackathon-SNAPSHOT'
+        //compile 'org.transmartproject:transmart-core-api:1.2.2-hackathon-SNAPSHOT'
         compile 'org.apache.httpcomponents:httpclient:4.3.3'
         compile 'org.apache.httpcomponents:httpasyncclient:4.0.2'
         compile 'com.google.guava:guava:18.0'
@@ -56,7 +56,7 @@ grails.project.dependency.resolution = {
         }
 
         if (!dm) {
-            runtime ':transmart-core:1.2.2-hackathon-SNAPSHOT'
+            //runtime ':transmart-core:1.2.2-hackathon-SNAPSHOT'
         } else {
             dm.internalDependencies delegate
         }
