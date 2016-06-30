@@ -44,10 +44,10 @@ grails.project.dependency.resolution = {
             transitive = false /* don't bring hamcrest */
             export     = false
         }
-        test 'org.gmock:gmock:0.9.0-r435-hyve2', {
-            transitive = false /* don't bring groovy-all */
-            export     = false
-        }
+        //test 'org.gmock:gmock:0.9.0-r435-hyve2', {
+        //    transitive = false /* don't bring groovy-all */
+        //    export     = false
+        //}
     }
 
     plugins {
