@@ -4,7 +4,7 @@ import org.transmartproject.i2b2.ontology.I2b2ConceptsResource
 import org.transmartproject.i2b2.querytool.I2b2QueriesResource
 
 class TransmartI2b2GrailsPlugin {
-    def version = "1.0-SNAPSHOT"
+    def version = "1.0-DBMI-SNAPSHOT"
     def grailsVersion = "2.3 > *"
     def pluginExcludes = []
 
@@ -61,7 +61,7 @@ the i2b2 XML APIs.\
         handleDefault 'port',         9090
         handleDefault 'context',      'i2b2'
 
-        handleDefault 'user',         'Demo'
+        handleDefault 'user',         'demo'
         handleDefault 'password',     'demouser'
         handleDefault 'domain',       'i2b2demo'
         handleDefault 'project_path', '/'
