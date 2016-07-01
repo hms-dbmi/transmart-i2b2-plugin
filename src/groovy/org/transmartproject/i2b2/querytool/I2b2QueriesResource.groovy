@@ -138,12 +138,13 @@ class I2b2QueriesResource implements QueriesResource {
     }
 
     private ListenableFuture<I2b2QueryResultInstance> getIncompleteResultInstance(Long id) {
+
         def message = messageFactory.create {
             'psm:psmheader' {
                 request_type 'CRC_QRY_getQueryResultInstance_fromResultInstanceId'
             }
             'psm:request' 'xsi:type': 'psm:instance_requestType', {
-                query_instance_id
+                id
             }
         }
         ListenableFuture<I2b2Response> resp =
