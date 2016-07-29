@@ -9,12 +9,10 @@ class I2b2Modifier extends AbstractI2b2OntologyTerm implements BoundModifier {
 
     OntologyTerm qualifiedTerm
 
-    @Override
     List<OntologyTerm> getChildren(boolean showHidden = false, boolean showSynonyms = false) {
         getAllDescendants(showHidden, showSynonyms, false)
     }
 
-    @Override
     List<OntologyTerm> getAllDescendants(boolean showHidden = false,
                                          boolean showSynonyms = false,
                                          boolean goDown = true) {

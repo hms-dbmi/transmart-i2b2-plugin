@@ -6,12 +6,10 @@ import org.transmartproject.core.ontology.OntologyTerm
 @Log4j
 class I2b2RegularOntologyTerm extends AbstractI2b2OntologyTerm {
 
-    @Override
     List<OntologyTerm> getChildren(boolean showHidden = false, boolean showSynonyms = false) {
         getAllDescendants(showHidden, showSynonyms, false)
     }
 
-    @Override
     List<OntologyTerm> getAllDescendants(boolean showHidden = false,
                                          boolean showSynonyms = false,
                                          boolean goDown = true) {

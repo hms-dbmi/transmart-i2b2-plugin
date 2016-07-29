@@ -7,7 +7,7 @@ import org.transmartproject.core.ontology.OntologyTerm
 @Component
 class I2b2OntologyTermFactory {
 
-    @Autowired
+    //@Autowired
     private I2b2ConceptsResource i2b2ConceptsResource
 
     OntologyTerm fromResponseNode(
